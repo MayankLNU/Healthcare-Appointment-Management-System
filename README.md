@@ -1,1 +1,1 @@
-# -Healthcare-Appointment-Management-System
+# Healthcare Appointment Management System
