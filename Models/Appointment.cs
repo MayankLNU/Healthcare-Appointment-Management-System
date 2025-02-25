@@ -4,7 +4,7 @@
     {
         Booked, Cancelled, Completed
     }
-    public class Appointment
+    public class Appointmenthh
     {
         public int AppointmentId { get; set; }
         public DateTime TimeSlot { get; set; }
