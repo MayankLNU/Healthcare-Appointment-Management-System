@@ -15,7 +15,7 @@
         public string PhoneNumber { get; set; }
 
         //Navigation
-        public List<Appointment> PatientAppointments { get; set; } = new List<Appointment>();
-        public List<Appointment> DoctorAppointments { get; set; } = new List<Appointment>();
+        public List<Appointment>? PatientAppointments { get; set; } = [];
+        public List<Appointment>? DoctorAppointments { get; set; } = [];
     }
 }

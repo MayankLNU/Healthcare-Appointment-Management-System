@@ -6,8 +6,8 @@
         public DateTime Date {  get; set; }
 
         //Navigation
-        public List<Appointment> DoctorAppointment { get; set; } = new List<Appointment> ();
-        public List<TimeSlot> TimeSlots { get; set; } = new List<TimeSlot>();
+        public List<Appointment> DoctorAppointment { get; set; } = [];
+        public List<TimeSlot> TimeSlots { get; set; } = [];
 
     }
 }

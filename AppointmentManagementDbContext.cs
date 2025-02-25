@@ -16,19 +16,19 @@ namespace AppointmentManagement
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            //Declaring ForeignKey for all Models
+            //Declaring Primary Key for all Models
             modelBuilder.Entity<Appointment>()
                 .HasKey(e => e.AppointmentId);
             modelBuilder.Entity<Availability>()
                 .HasKey(e => e.DoctorId);
             modelBuilder.Entity<Consultation>()
-                .HasKey(e => e.ConsultationId);
+                .HasKey(e => e.ConsultationId); 
             modelBuilder.Entity<User>()
                 .HasKey(e => e.UserId);
             modelBuilder.Entity<TimeSlot>()
                 .HasKey(e => e.TimeSlotId);
 
-            //Specify Relations
+            //Specify Relations And Foreign Key
             modelBuilder.Entity<Appointment>()
                 .HasOne(q => q.Availability)
                 .WithMany(q => q.DoctorAppointment)
