@@ -1,4 +1,4 @@
-﻿namespace AppointmentManagement.Models
+﻿namespace AppointmentManagement.Models.Domain
 {
     public enum Status
     {
@@ -7,14 +7,14 @@
     public class Appointment
     {
         public int AppointmentId { get; set; }
-        public DateTime TimeSlot { get; set; }
+        public TimeOnly TimeSlot { get; set; }
         public Status Status { get; set; }
 
         //Navigation
-        public User Patient { get; set; }
-        public User Doctor { get; set; }
-        public Availability Availability { get; set; }
-        public Consultation Consultation { get; set; }
+        public User? Patient { get; set; }
+        public User? Doctor { get; set; }
+        public Availability? Availability { get; set; }
+        public Consultation? Consultation { get; set; }
 
         // ForeignKeys
         public int PatientId { get; set; }

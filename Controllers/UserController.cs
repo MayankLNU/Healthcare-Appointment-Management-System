@@ -1,5 +1,6 @@
-﻿using AppointmentManagement.Models;
+﻿using AppointmentManagement.Models.Domain;
 using AppointmentManagement.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ namespace AppointmentManagement.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class UserController : ControllerBase
     {
         private readonly IUserRepository _context;
@@ -61,7 +63,7 @@ namespace AppointmentManagement.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteUser(int id)
         {
-            var user = await _context.GetUserByIdAsync(id);
+            User user = await _context.GetUserByIdAsync(id);
             if (user == null)
             {
                 return NotFound();

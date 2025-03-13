@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AppointmentManagement.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigration : Migration
+    public partial class AddedDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -17,7 +17,7 @@ namespace AppointmentManagement.Migrations
                 {
                     DoctorId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Date = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Date = table.Column<DateOnly>(type: "date", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -33,7 +33,8 @@ namespace AppointmentManagement.Migrations
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Role = table.Column<int>(type: "int", nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    PhoneNumber = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    PasswordHash = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -41,23 +42,26 @@ namespace AppointmentManagement.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TimeSlots",
+                name: "TimeSlot",
                 columns: table => new
                 {
                     TimeSlotId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    StartTime = table.Column<TimeSpan>(type: "time", nullable: false),
-                    EndTime = table.Column<TimeSpan>(type: "time", nullable: false),
-                    AvailabilityDoctorId = table.Column<int>(type: "int", nullable: true)
+                    StartTime = table.Column<TimeOnly>(type: "time", nullable: false),
+                    EndTime = table.Column<TimeOnly>(type: "time", nullable: false),
+                    Date = table.Column<DateOnly>(type: "date", nullable: false),
+                    IsAvailable = table.Column<bool>(type: "bit", nullable: false),
+                    DoctorId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TimeSlots", x => x.TimeSlotId);
+                    table.PrimaryKey("PK_TimeSlot", x => x.TimeSlotId);
                     table.ForeignKey(
-                        name: "FK_TimeSlots_Availabilities_AvailabilityDoctorId",
-                        column: x => x.AvailabilityDoctorId,
+                        name: "FK_TimeSlot_Availabilities_DoctorId",
+                        column: x => x.DoctorId,
                         principalTable: "Availabilities",
-                        principalColumn: "DoctorId");
+                        principalColumn: "DoctorId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -66,7 +70,7 @@ namespace AppointmentManagement.Migrations
                 {
                     AppointmentId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    TimeSlot = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    TimeSlot = table.Column<TimeOnly>(type: "time", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     PatientId = table.Column<int>(type: "int", nullable: false),
                     DoctorId = table.Column<int>(type: "int", nullable: false)
@@ -128,9 +132,9 @@ namespace AppointmentManagement.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_TimeSlots_AvailabilityDoctorId",
-                table: "TimeSlots",
-                column: "AvailabilityDoctorId");
+                name: "IX_TimeSlot_DoctorId",
+                table: "TimeSlot",
+                column: "DoctorId");
         }
 
         /// <inheritdoc />
@@ -140,7 +144,7 @@ namespace AppointmentManagement.Migrations
                 name: "Consultations");
 
             migrationBuilder.DropTable(
-                name: "TimeSlots");
+                name: "TimeSlot");
 
             migrationBuilder.DropTable(
                 name: "Appointments");

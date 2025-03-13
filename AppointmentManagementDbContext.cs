@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using AppointmentManagement.Models;
+using AppointmentManagement.Models.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace AppointmentManagement
@@ -12,7 +12,6 @@ namespace AppointmentManagement
         public DbSet<Availability> Availabilities { get; set; }
         public DbSet<Consultation> Consultations { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<TimeSlot> TimeSlots { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -52,6 +51,11 @@ namespace AppointmentManagement
                 .WithOne(q => q.Consultation)
                 .HasForeignKey<Consultation>(q => q.AppointmentId)
                 .OnDelete(DeleteBehavior.NoAction);
+
+            modelBuilder.Entity<TimeSlot>()
+                .HasOne(q => q.Availability)
+                .WithMany(q => q.TimeSlots)
+                .HasForeignKey(q => q.DoctorId);
 
             //Getting all Configurations
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());

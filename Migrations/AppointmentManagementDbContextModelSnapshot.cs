@@ -22,7 +22,7 @@ namespace AppointmentManagement.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("AppointmentManagement.Models.Appointment", b =>
+            modelBuilder.Entity("AppointmentManagement.Models.Domain.Appointment", b =>
                 {
                     b.Property<int>("AppointmentId")
                         .ValueGeneratedOnAdd()
@@ -39,8 +39,8 @@ namespace AppointmentManagement.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("TimeSlot")
-                        .HasColumnType("datetime2");
+                    b.Property<TimeOnly>("TimeSlot")
+                        .HasColumnType("time");
 
                     b.HasKey("AppointmentId");
 
@@ -51,7 +51,7 @@ namespace AppointmentManagement.Migrations
                     b.ToTable("Appointments");
                 });
 
-            modelBuilder.Entity("AppointmentManagement.Models.Availability", b =>
+            modelBuilder.Entity("AppointmentManagement.Models.Domain.Availability", b =>
                 {
                     b.Property<int>("DoctorId")
                         .ValueGeneratedOnAdd()
@@ -59,15 +59,15 @@ namespace AppointmentManagement.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("DoctorId"));
 
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
 
                     b.HasKey("DoctorId");
 
                     b.ToTable("Availabilities");
                 });
 
-            modelBuilder.Entity("AppointmentManagement.Models.Consultation", b =>
+            modelBuilder.Entity("AppointmentManagement.Models.Domain.Consultation", b =>
                 {
                     b.Property<int>("ConsultationId")
                         .ValueGeneratedOnAdd()
@@ -92,7 +92,7 @@ namespace AppointmentManagement.Migrations
                     b.ToTable("Consultations");
                 });
 
-            modelBuilder.Entity("AppointmentManagement.Models.TimeSlot", b =>
+            modelBuilder.Entity("AppointmentManagement.Models.Domain.TimeSlot", b =>
                 {
                     b.Property<int>("TimeSlotId")
                         .ValueGeneratedOnAdd()
@@ -100,23 +100,29 @@ namespace AppointmentManagement.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TimeSlotId"));
 
-                    b.Property<int?>("AvailabilityDoctorId")
+                    b.Property<DateOnly>("Date")
+                        .HasColumnType("date");
+
+                    b.Property<int>("DoctorId")
                         .HasColumnType("int");
 
-                    b.Property<TimeSpan>("EndTime")
+                    b.Property<TimeOnly>("EndTime")
                         .HasColumnType("time");
 
-                    b.Property<TimeSpan>("StartTime")
+                    b.Property<bool>("IsAvailable")
+                        .HasColumnType("bit");
+
+                    b.Property<TimeOnly>("StartTime")
                         .HasColumnType("time");
 
                     b.HasKey("TimeSlotId");
 
-                    b.HasIndex("AvailabilityDoctorId");
+                    b.HasIndex("DoctorId");
 
-                    b.ToTable("TimeSlots");
+                    b.ToTable("TimeSlot");
                 });
 
-            modelBuilder.Entity("AppointmentManagement.Models.User", b =>
+            modelBuilder.Entity("AppointmentManagement.Models.Domain.User", b =>
                 {
                     b.Property<int>("UserId")
                         .ValueGeneratedOnAdd()
@@ -132,6 +138,9 @@ namespace AppointmentManagement.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("PasswordHash")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("PhoneNumber")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -144,21 +153,21 @@ namespace AppointmentManagement.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("AppointmentManagement.Models.Appointment", b =>
+            modelBuilder.Entity("AppointmentManagement.Models.Domain.Appointment", b =>
                 {
-                    b.HasOne("AppointmentManagement.Models.Availability", "Availability")
+                    b.HasOne("AppointmentManagement.Models.Domain.Availability", "Availability")
                         .WithMany("DoctorAppointment")
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("AppointmentManagement.Models.User", "Doctor")
+                    b.HasOne("AppointmentManagement.Models.Domain.User", "Doctor")
                         .WithMany("DoctorAppointments")
                         .HasForeignKey("DoctorId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("AppointmentManagement.Models.User", "Patient")
+                    b.HasOne("AppointmentManagement.Models.Domain.User", "Patient")
                         .WithMany("PatientAppointments")
                         .HasForeignKey("PatientId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -171,38 +180,41 @@ namespace AppointmentManagement.Migrations
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("AppointmentManagement.Models.Consultation", b =>
+            modelBuilder.Entity("AppointmentManagement.Models.Domain.Consultation", b =>
                 {
-                    b.HasOne("AppointmentManagement.Models.Appointment", "Appointment")
+                    b.HasOne("AppointmentManagement.Models.Domain.Appointment", "Appointment")
                         .WithOne("Consultation")
-                        .HasForeignKey("AppointmentManagement.Models.Consultation", "AppointmentId")
+                        .HasForeignKey("AppointmentManagement.Models.Domain.Consultation", "AppointmentId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Appointment");
                 });
 
-            modelBuilder.Entity("AppointmentManagement.Models.TimeSlot", b =>
+            modelBuilder.Entity("AppointmentManagement.Models.Domain.TimeSlot", b =>
                 {
-                    b.HasOne("AppointmentManagement.Models.Availability", null)
+                    b.HasOne("AppointmentManagement.Models.Domain.Availability", "Availability")
                         .WithMany("TimeSlots")
-                        .HasForeignKey("AvailabilityDoctorId");
-                });
-
-            modelBuilder.Entity("AppointmentManagement.Models.Appointment", b =>
-                {
-                    b.Navigation("Consultation")
+                        .HasForeignKey("DoctorId")
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Availability");
                 });
 
-            modelBuilder.Entity("AppointmentManagement.Models.Availability", b =>
+            modelBuilder.Entity("AppointmentManagement.Models.Domain.Appointment", b =>
+                {
+                    b.Navigation("Consultation");
+                });
+
+            modelBuilder.Entity("AppointmentManagement.Models.Domain.Availability", b =>
                 {
                     b.Navigation("DoctorAppointment");
 
                     b.Navigation("TimeSlots");
                 });
 
-            modelBuilder.Entity("AppointmentManagement.Models.User", b =>
+            modelBuilder.Entity("AppointmentManagement.Models.Domain.User", b =>
                 {
                     b.Navigation("DoctorAppointments");
 

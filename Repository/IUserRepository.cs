@@ -1,4 +1,7 @@
 ﻿using AppointmentManagement.Models;
+using AppointmentManagement.Models.Domain;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace AppointmentManagement.Repository
 {
@@ -9,5 +12,6 @@ namespace AppointmentManagement.Repository
         Task<IEnumerable<User>> GetAllUsersAsync();
         Task UpdateUserAsync(User user);
         Task DeleteUserAsync(int userId);
+        Task<User> GetUserByEmailAsync(string email);
     }
 }
