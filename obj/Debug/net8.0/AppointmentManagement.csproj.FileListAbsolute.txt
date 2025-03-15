@@ -303,4 +303,4 @@ C:\Users\2388194\OneDrive - Cognizant\Desktop\Project\REST API\AppointmentManage
 C:\Users\2388194\OneDrive - Cognizant\Desktop\Project\REST API\AppointmentManagement\obj\Debug\net8.0\AppointmentManagement.pdb
 C:\Users\2388194\OneDrive - Cognizant\Desktop\Project\REST API\AppointmentManagement\obj\Debug\net8.0\AppointmentManagement.genruntimeconfig.cache
 C:\Users\2388194\OneDrive - Cognizant\Desktop\Project\REST API\AppointmentManagement\obj\Debug\net8.0\ref\AppointmentManagement.dll
-C:\Users\2388194\OneDrive - Cognizant\Desktop\Project\REST API\AppointmentManagement\bin\Debug\net8.0\BCrypt.Net.dll
+C:\Users\2388194\OneDrive - Cognizant\Desktop\Project\REST API\AppointmentManagement\bin\Debug\net8.0\BCrypt.Net-Next.dll

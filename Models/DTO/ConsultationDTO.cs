@@ -1,16 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations;
-
-namespace AppointmentManagement.Models.DTO
+﻿namespace AppointmentManagement.Models.DTO
 {
     public class ConsultationDTO
     {
-        public int ConsultationId { get; set; }
-
-        public string Notes { get; set; }
-
+        public int AppointmentId { get; set; }
         public string Prescription { get; set; }
+        public string Notes { get; set; }
+    }
 
-        [Required]
+    public class PatientConsultationDTO
+    {
         public int AppointmentId { get; set; }
     }
 }

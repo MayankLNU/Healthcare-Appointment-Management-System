@@ -4,13 +4,9 @@ namespace AppointmentManagement.Models.DTO
 {
     public class AvailabilityDTO
     {
-        [Required]
-        public int DoctorId { get; set; }
-
-        [Required]
-        public DateTime Date { get; set; }
-
-        [Required]
-        public List<TimeSlotDTO> TimeSlots { get; set; }
+        public string Email { get; set; }
+        public DateOnly Date { get; set; }
+        public TimeOnly StartTime { get; set; }
+        public TimeOnly EndTime { get; set; }
     }
 }

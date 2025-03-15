@@ -2,20 +2,13 @@
 
 namespace AppointmentManagement.Models.DTO
 {
-    public class TimeSlotDTO
+    public class AvailableTimeSlotResponseDTO
     {
-        public int TimeSlotId { get; set; }
-
-        [Required]
-        public TimeSpan StartTime { get; set; }
-
-        [Required]
-        public TimeSpan EndTime { get; set; }
-
-        [Required]
-        public bool IsAvailable { get; set; }
-
-        [Required]
         public int DoctorId { get; set; }
+        public string DoctorName { get; set; }
+        public DateOnly Date { get; set; }
+        public TimeOnly StartTime { get; set; }
+        public TimeOnly EndTime { get; set; }   
+
     }
 }
