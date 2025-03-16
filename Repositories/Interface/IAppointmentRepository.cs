@@ -4,10 +4,10 @@ namespace AppointmentManagement.Repository.Interface
 {
     public interface IAppointmentRepository
     {
-        Task AddAppointmentAsync(Appointment appointment);
+        Task<bool> AddAppointmentAsync(Appointment appointment);
         Task<Appointment> GetAppointmentByIdAsync(int appointmentId);
         Task<IEnumerable<Appointment>> GetAllAppointmentsAsync();
-        Task UpdateAppointmentAsync(Appointment appointment);
+        Task<bool> UpdateAppointmentAsync(Appointment appointment);
         Task DeleteAppointmentAsync(int appointmentId);
     }
 }

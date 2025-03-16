@@ -44,6 +44,6 @@ public class AccountController : ControllerBase
             return Unauthorized(new { Message = "Invalid login attempt. Check Email Id and Password!!" });
         }
 
-        return Ok(new LoginResponse{ JwtToken = token });
+        return Ok(token);
     }
 }

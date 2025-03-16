@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace AppointmentManagement.Repository.Repo
+namespace AppointmentManagement.Repositories.Repository
 {
     public class AvailabilityRepository : IAvailabilityRepository
     {
@@ -17,10 +17,15 @@ namespace AppointmentManagement.Repository.Repo
         }
 
         // Create
-        public async Task AddAvailabilityAsync(Availability availability)
+        public async Task<bool> AddAvailabilityAsync(Availability availability)
         {
-            await _context.Availabilities.AddAsync(availability);
-            await _context.SaveChangesAsync();
+            if (availability != null)
+            {
+                await _context.Availabilities.AddAsync(availability);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
         }
 
         // Read
@@ -35,10 +40,15 @@ namespace AppointmentManagement.Repository.Repo
         }
 
         // Update
-        public async Task UpdateAvailabilityAsync(Availability availability)
+        public async Task<bool> UpdateAvailabilityAsync(Availability availability)
         {
-            _context.Availabilities.Update(availability);
-            await _context.SaveChangesAsync();
+            if (availability != null)
+            {
+                _context.Availabilities.Update(availability);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
         }
 
         // Delete

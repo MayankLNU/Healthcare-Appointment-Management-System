@@ -7,11 +7,11 @@ namespace AppointmentManagement.Repository.Interface
 {
     public interface IDoctorRepository
     {
-        Task AddDoctorAsync(Doctor user);
+        Task<bool> AddDoctorAsync(Doctor user);
         Task<Doctor> GetDoctorByIdAsync(int userId);
-        Task<IEnumerable<Doctor>> GetAllDoctorsAsync();
-        Task UpdateDoctorAsync(Doctor user);
-        Task DeleteDoctorAsync(int userId);
         Task<Doctor> GetDoctorByEmailAsync(string email);
+        Task<IEnumerable<Doctor>> GetAllDoctorsAsync();
+        Task<bool> UpdateDoctorAsync(Doctor user);
+        Task DeleteDoctorAsync(int userId);
     }
 }

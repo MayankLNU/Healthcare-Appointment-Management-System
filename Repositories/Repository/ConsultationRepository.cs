@@ -16,9 +16,13 @@ namespace AppointmentManagement.Repositories.Repository
         // Create
         public async Task<bool> AddConsultationAsync(Consultation consultation)
         {
-            await _context.Consultations.AddAsync(consultation);
-            await _context.SaveChangesAsync();
-            return true;
+            if (consultation != null)
+            {
+                await _context.Consultations.AddAsync(consultation);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
         }
 
         //Read

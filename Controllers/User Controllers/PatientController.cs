@@ -24,6 +24,10 @@ namespace AppointmentManagement.Controllers.User_Controllers
         public async Task<IActionResult> GetAvailableSlots([FromQuery] DateOnly date)
         {
             var availableSlots = await _appointmentService.GetAvailableTimeSlots(date);
+            if (availableSlots == null)
+            {
+                return Ok("No time slots available :-(");
+            }
             return Ok(availableSlots);
         }
 
@@ -40,13 +44,13 @@ namespace AppointmentManagement.Controllers.User_Controllers
 
             if (result == null)
             {
-                return BadRequest(new { Message = "Something went wrong. Appointment Not Booked. Maybe Slot Not Available." });
+                return BadRequest(new { Message = "Something went wrong. Appointment Not Booked. Slot Not Available or Invalid details." });
             }
 
             return Ok(result);
         }
 
-        [HttpPost("Update-Appointment")]
+        [HttpPut("Update-Appointment")]
         [Authorize(Roles = "Patient")]
         public async Task<IActionResult> UpdateAppointment([FromBody] UpdateAppointmentDTO updateAppointmentDTO)
         {
@@ -56,6 +60,11 @@ namespace AppointmentManagement.Controllers.User_Controllers
             }
 
             var result = await _appointmentService.UpdateAppointment(updateAppointmentDTO);
+            if (result == null)
+            {
+                return BadRequest(new { Message = "Invalid Details! Please check your appointment id" });
+            }
+
             return Ok(result);
         }
 
@@ -73,7 +82,7 @@ namespace AppointmentManagement.Controllers.User_Controllers
             return Ok(result);
         }
 
-        [HttpPost("Read-PrescriptionsAndNotes")]
+        [HttpPost("Read-Prescriptions-And-Notes")]
         [Authorize(Roles = "Patient")]
         public async Task<IActionResult> ReadPrescriptionsAndNotes([FromBody] PatientConsultationDTO patientConsultationDTO)
         {

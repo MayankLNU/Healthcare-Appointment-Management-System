@@ -1,5 +1,6 @@
 ﻿using AppointmentManagement.Models.Domain;
 using AppointmentManagement.Models.DTO;
+using AppointmentManagement.Repositories.Interface;
 using AppointmentManagement.Repository.Interface;
 using AppointmentManagement.Services.Interface;
 
@@ -9,11 +10,13 @@ namespace AppointmentManagement.Services.Service
     {
         private readonly IAvailabilityRepository _availabilityRepository;
         private readonly IDoctorRepository _doctorRepository;
+        private readonly ITimeSlotRepository _timeSlotRepository;
 
-        public AvailabilityService(IAvailabilityRepository availabilityRepository, IDoctorRepository doctorRepository)
+        public AvailabilityService(IAvailabilityRepository availabilityRepository, IDoctorRepository doctorRepository, ITimeSlotRepository timeSlotRepository)
         {
             _availabilityRepository = availabilityRepository;
             _doctorRepository = doctorRepository;
+            _timeSlotRepository = timeSlotRepository;
         }
 
         public async Task<bool> AddAvailabilityAsync(AvailabilityDTO availabilityDTO)
@@ -57,6 +60,20 @@ namespace AppointmentManagement.Services.Service
             await _availabilityRepository.UpdateAvailabilityAsync(availability);
 
             // Save changes to the database
+            return true;
+        }
+
+        public async Task<bool> RemoveTimeSlotAsync(RemoveTimeSlotDTO removeTimeSlotDTO)
+        {
+            var doctor = await _doctorRepository.GetDoctorByEmailAsync(removeTimeSlotDTO.DoctorEmail);
+            var timeSlot = await _timeSlotRepository.GetAvailableTimeSlotsByDateTimeAndDrId(removeTimeSlotDTO.Date, removeTimeSlotDTO.StartTime, doctor.DoctorId);
+            
+            if (timeSlot.IsAvailable == false || timeSlot == null)
+            {
+                return false;
+            }
+
+            await _timeSlotRepository.DeleteTimeSlotAsync(timeSlot.TimeSlotId);
             return true;
         }
     }

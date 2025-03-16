@@ -34,7 +34,7 @@
   {
     "ContainingType": "AppointmentManagement.Controllers.User_Controllers.DoctorController",
     "Method": "AddPatientsPrescriptionsAndNotes",
-    "RelativePath": "api/Doctor/Add-PrescriptonsAndNotes",
+    "RelativePath": "api/Doctor/Add-Prescriptons-And-Notes",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -58,6 +58,38 @@
       {
         "Name": "availabilityDTO",
         "Type": "AppointmentManagement.Models.DTO.AvailabilityDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AppointmentManagement.Controllers.User_Controllers.DoctorController",
+    "Method": "GetBookedSlots",
+    "RelativePath": "api/Doctor/Booked-Slots",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "bookedSlotsDTO",
+        "Type": "AppointmentManagement.Models.DTO.BookedTimeSlotsDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AppointmentManagement.Controllers.User_Controllers.DoctorController",
+    "Method": "RemoveSlots",
+    "RelativePath": "api/Doctor/Remove-Slot",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "removeTimeSlotDTO",
+        "Type": "AppointmentManagement.Models.DTO.RemoveTimeSlotDTO",
         "IsRequired": true
       }
     ],
@@ -114,7 +146,7 @@
   {
     "ContainingType": "AppointmentManagement.Controllers.User_Controllers.PatientController",
     "Method": "ReadPrescriptionsAndNotes",
-    "RelativePath": "api/Patient/Read-PrescriptionsAndNotes",
+    "RelativePath": "api/Patient/Read-Prescriptions-And-Notes",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
@@ -131,7 +163,7 @@
     "ContainingType": "AppointmentManagement.Controllers.User_Controllers.PatientController",
     "Method": "UpdateAppointment",
     "RelativePath": "api/Patient/Update-Appointment",
-    "HttpMethod": "POST",
+    "HttpMethod": "PUT",
     "IsController": true,
     "Order": 0,
     "Parameters": [

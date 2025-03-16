@@ -4,7 +4,7 @@ using AppointmentManagement.Repository.Interface;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace AppointmentManagement.Repository.Repo
+namespace AppointmentManagement.Repositories.Repository
 {
     public class AppointmentRepository : IAppointmentRepository
     {
@@ -15,10 +15,15 @@ namespace AppointmentManagement.Repository.Repo
         }
 
         //Create
-        public async Task AddAppointmentAsync(Appointment appointment)
+        public async Task<bool> AddAppointmentAsync(Appointment appointment)
         {
-            await _context.Appointments.AddAsync(appointment);
-            await _context.SaveChangesAsync();
+            if (appointment != null)
+            {
+                await _context.Appointments.AddAsync(appointment);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
         }
 
         //Read
@@ -33,11 +38,15 @@ namespace AppointmentManagement.Repository.Repo
         }
 
         //Update
-        public async Task UpdateAppointmentAsync(Appointment appointment)
+        public async Task<bool> UpdateAppointmentAsync(Appointment appointment)
         {
-            _context.Appointments.Update(appointment);
-            await _context.SaveChangesAsync();
-
+            if (appointment != null)
+            {
+                _context.Appointments.Update(appointment);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
         }
 
         //Delete

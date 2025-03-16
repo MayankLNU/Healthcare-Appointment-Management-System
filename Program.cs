@@ -1,19 +1,17 @@
-using System.Diagnostics.Metrics;
-using System.Numerics;
-using System.Text;
 using AppointmentManagement.Models;
 using AppointmentManagement.Repositories.Interface;
 using AppointmentManagement.Repositories.Repository;
 using AppointmentManagement.Repository.Interface;
-using AppointmentManagement.Repository.Repo;
-using AppointmentManagement.Services;
 using AppointmentManagement.Services.Interface;
 using AppointmentManagement.Services.Service;
+using AppointmentManagement.Services;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.Data.SqlClient;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.Data;
+using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -27,6 +25,10 @@ builder.Services.AddControllers().AddJsonOptions(options =>
     options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.Preserve;
     options.JsonSerializerOptions.Converters.Add(new System.Text.Json.Serialization.JsonStringEnumConverter());
 });
+
+// Register IDbConnection
+builder.Services.AddScoped<IDbConnection>(sp =>
+    new SqlConnection(builder.Configuration.GetConnectionString("Connection")));
 
 // For Dependency Injection
 builder.Services.AddScoped<IDoctorRepository, DoctorRepository>();
@@ -67,7 +69,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Appointment Management API", Version = "v1" });
+    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Healthcare Appointment Management System API", Version = "v1" });
 
     // Define the BearerAuth scheme
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme

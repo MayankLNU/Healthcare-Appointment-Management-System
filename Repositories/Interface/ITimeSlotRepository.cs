@@ -7,7 +7,9 @@ namespace AppointmentManagement.Repositories.Interface
     {
         Task<IEnumerable<TimeSlot>> GetAvailableTimeSlotsByDate(DateOnly date);
         Task<TimeSlot> GetAvailableTimeSlotsByDateTimeAndDrId(DateOnly date, TimeOnly startTime, int doctorId);
-        Task UpdateTimeSlotAsync(TimeSlot timeSlot);
-        Task UpdateTimeSlotAvailabilityAsync(DateOnly dateOnly, TimeOnly startTime, int doctorId, bool isAvailable);
+        Task<IEnumerable<TimeSlot>> GetBookedTimeSlotsByDateAndDrId(DateOnly date, int doctorId);
+        Task<bool> UpdateTimeSlotAsync(TimeSlot timeSlot);
+        Task<bool> UpdateTimeSlotAvailabilityAsync(DateOnly dateOnly, TimeOnly startTime, int doctorId, bool isAvailable);
+        Task DeleteTimeSlotAsync(int timeSlotId);
     }
 }

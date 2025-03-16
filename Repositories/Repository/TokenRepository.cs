@@ -5,7 +5,7 @@ using AppointmentManagement.Repository.Interface;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 
-namespace AppointmentManagement.Repository.Repo
+namespace AppointmentManagement.Repositories.Repository
 {
     public class TokenRepository : ITokenRepository
     {
@@ -15,6 +15,7 @@ namespace AppointmentManagement.Repository.Repo
             _configuration = configuration;
         }
 
+        // Create
         public string CreateJWTToken(IdentityUser user, List<string> roles)
         {
             var claims = new List<Claim>

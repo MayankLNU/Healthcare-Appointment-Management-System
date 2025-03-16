@@ -6,7 +6,6 @@ using AppointmentManagement.Repositories.Interface;
 using AppointmentManagement.Repositories.Repository;
 using AppointmentManagement.Repository;
 using AppointmentManagement.Repository.Interface;
-using AppointmentManagement.Repository.Repo;
 using AppointmentManagement.Services.Interface;
 
 namespace AppointmentManagement.Services
@@ -48,6 +47,26 @@ namespace AppointmentManagement.Services
             return response;
         }
 
+        public async Task<IEnumerable<BookedTimeSlotResponseDTO>> GetBookedTimeSlots(BookedTimeSlotsDTO bookedSlotsDTO)
+        {
+            var doctor = await _doctorRepository.GetDoctorByEmailAsync(bookedSlotsDTO.DoctorEmail);
+            var timeSlots = await _timeSlotRepository.GetBookedTimeSlotsByDateAndDrId(bookedSlotsDTO.Date, doctor.DoctorId);
+
+            var response = new List<BookedTimeSlotResponseDTO>();
+
+            foreach (var timeSlot in timeSlots)
+            {
+                response.Add(new BookedTimeSlotResponseDTO
+                {
+                    Date = timeSlot.Date,
+                    StartTime = timeSlot.StartTime,
+                    EndTime = timeSlot.EndTime
+                });
+            }
+
+            return response;
+        }
+
         public async Task<BookAppointmentResponseDTO> BookAppointment(BookAppointmentDTO bookAppointmentDTO)
         {
             var slotStatus = await _timeSlotRepository.GetAvailableTimeSlotsByDateTimeAndDrId(bookAppointmentDTO.Date, bookAppointmentDTO.StartTime, bookAppointmentDTO.DoctorId);
@@ -57,6 +76,12 @@ namespace AppointmentManagement.Services
             }
 
             var patient = await _patientRepository.GetPatientByEmailAsync(bookAppointmentDTO.PatientEmail);
+
+            if (patient == null)
+            {
+                return null;
+            }
+
             var appointment = new Appointment
             {
                 PatientId = patient.PatientId,
@@ -65,7 +90,12 @@ namespace AppointmentManagement.Services
                 TimeSlot = bookAppointmentDTO.StartTime,
                 Status = "Booked",
             };
-            await _appointmentRepository.AddAppointmentAsync(appointment);
+            var added = await _appointmentRepository.AddAppointmentAsync(appointment);
+
+            if (added == false)
+            {
+                return null;
+            }
 
             await _timeSlotRepository.UpdateTimeSlotAvailabilityAsync(bookAppointmentDTO.Date, bookAppointmentDTO.StartTime, bookAppointmentDTO.DoctorId, false);
 
@@ -74,7 +104,8 @@ namespace AppointmentManagement.Services
             {
                 AppointmentId = appointment.AppointmentId,
                 StartTime = bookAppointmentDTO.StartTime,
-                DoctorName = doctor.Name
+                DoctorName = doctor.Name,
+                Date = bookAppointmentDTO.Date
             };
 
             return bookingDetails;
@@ -83,6 +114,10 @@ namespace AppointmentManagement.Services
         public async Task<BookAppointmentResponseDTO> UpdateAppointment(UpdateAppointmentDTO updateAppointmentDTO)
         {
             var appointment = await _appointmentRepository.GetAppointmentByIdAsync(updateAppointmentDTO.AppointmentId);
+            if (appointment == null) { return null; }
+
+            var newAppointmentStatus = await _timeSlotRepository.GetAvailableTimeSlotsByDateTimeAndDrId(updateAppointmentDTO.Date, updateAppointmentDTO.StartTime, updateAppointmentDTO.DoctorId);
+            if (newAppointmentStatus.IsAvailable == false || newAppointmentStatus == null) { return null; }
 
             // Update the time slot availability
             await _timeSlotRepository.UpdateTimeSlotAvailabilityAsync(appointment.Date, appointment.TimeSlot, appointment.DoctorId, true);
@@ -102,7 +137,8 @@ namespace AppointmentManagement.Services
             {
                 AppointmentId = appointment.AppointmentId,
                 StartTime = appointment.TimeSlot,
-                DoctorName = doctor.Name
+                DoctorName = doctor.Name,
+                Date = appointment.Date
             };
 
             return bookingDetails;

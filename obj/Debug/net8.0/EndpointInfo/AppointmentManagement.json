@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.1",
   "info": {
-    "title": "Appointment Management API",
+    "title": "Healthcare Appointment Management System API",
     "version": "v1"
   },
   "paths": {
@@ -98,7 +98,69 @@
         }
       }
     },
-    "/api/Doctor/Add-PrescriptonsAndNotes": {
+    "/api/Doctor/Booked-Slots": {
+      "post": {
+        "tags": [
+          "Doctor"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookedTimeSlotsDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookedTimeSlotsDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookedTimeSlotsDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Doctor/Remove-Slot": {
+      "delete": {
+        "tags": [
+          "Doctor"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveTimeSlotDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveTimeSlotDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/RemoveTimeSlotDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
+    "/api/Doctor/Add-Prescriptons-And-Notes": {
       "post": {
         "tags": [
           "Doctor"
@@ -183,7 +245,7 @@
       }
     },
     "/api/Patient/Update-Appointment": {
-      "post": {
+      "put": {
         "tags": [
           "Patient"
         ],
@@ -244,7 +306,7 @@
         }
       }
     },
-    "/api/Patient/Read-PrescriptionsAndNotes": {
+    "/api/Patient/Read-Prescriptions-And-Notes": {
       "post": {
         "tags": [
           "Patient"
@@ -279,11 +341,19 @@
   "components": {
     "schemas": {
       "AvailabilityDTO": {
+        "required": [
+          "date",
+          "email",
+          "endTime",
+          "startTime"
+        ],
         "type": "object",
         "properties": {
           "email": {
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9._%+-]+@gmail\\.com$",
             "type": "string",
-            "nullable": true
+            "format": "email"
           },
           "date": {
             "type": "string",
@@ -301,6 +371,12 @@
         "additionalProperties": false
       },
       "BookAppointmentDTO": {
+        "required": [
+          "date",
+          "doctorId",
+          "patientEmail",
+          "startTime"
+        ],
         "type": "object",
         "properties": {
           "date": {
@@ -316,13 +392,39 @@
             "format": "int32"
           },
           "patientEmail": {
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9._%+-]+@gmail\\.com$",
             "type": "string",
-            "nullable": true
+            "format": "email"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BookedTimeSlotsDTO": {
+        "required": [
+          "date",
+          "doctorEmail"
+        ],
+        "type": "object",
+        "properties": {
+          "doctorEmail": {
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9._%+-]+@gmail\\.com$",
+            "type": "string",
+            "format": "email"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
           }
         },
         "additionalProperties": false
       },
       "CancelAppointmentDTO": {
+        "required": [
+          "appointmentId",
+          "patientEmail"
+        ],
         "type": "object",
         "properties": {
           "appointmentId": {
@@ -330,13 +432,18 @@
             "format": "int32"
           },
           "patientEmail": {
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9._%+-]+@gmail\\.com$",
             "type": "string",
-            "nullable": true
+            "format": "email"
           }
         },
         "additionalProperties": false
       },
       "ConsultationDTO": {
+        "required": [
+          "appointmentId"
+        ],
         "type": "object",
         "properties": {
           "appointmentId": {
@@ -355,20 +462,30 @@
         "additionalProperties": false
       },
       "LoginDTO": {
+        "required": [
+          "email",
+          "password"
+        ],
         "type": "object",
         "properties": {
           "email": {
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9._%+-]+@gmail\\.com$",
             "type": "string",
-            "nullable": true
+            "format": "email"
           },
           "password": {
+            "minLength": 1,
             "type": "string",
-            "nullable": true
+            "format": "password"
           }
         },
         "additionalProperties": false
       },
       "PatientConsultationDTO": {
+        "required": [
+          "appointmentId"
+        ],
         "type": "object",
         "properties": {
           "appointmentId": {
@@ -378,7 +495,39 @@
         },
         "additionalProperties": false
       },
+      "RemoveTimeSlotDTO": {
+        "required": [
+          "date",
+          "doctorEmail",
+          "startTime"
+        ],
+        "type": "object",
+        "properties": {
+          "doctorEmail": {
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9._%+-]+@gmail\\.com$",
+            "type": "string",
+            "format": "email"
+          },
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "startTime": {
+            "type": "string",
+            "format": "time"
+          }
+        },
+        "additionalProperties": false
+      },
       "UpdateAppointmentDTO": {
+        "required": [
+          "appointmentId",
+          "date",
+          "doctorId",
+          "patientEmail",
+          "startTime"
+        ],
         "type": "object",
         "properties": {
           "appointmentId": {
@@ -398,34 +547,48 @@
             "format": "int32"
           },
           "patientEmail": {
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9._%+-]+@gmail\\.com$",
             "type": "string",
-            "nullable": true
+            "format": "email"
           }
         },
         "additionalProperties": false
       },
       "UserDTO": {
+        "required": [
+          "email",
+          "name",
+          "password",
+          "phoneNumber",
+          "role"
+        ],
         "type": "object",
         "properties": {
           "email": {
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9._%+-]+@gmail\\.com$",
             "type": "string",
-            "nullable": true
+            "format": "email"
           },
           "password": {
+            "minLength": 1,
             "type": "string",
-            "nullable": true
+            "format": "password"
           },
           "role": {
-            "type": "string",
-            "nullable": true
+            "minLength": 1,
+            "type": "string"
           },
           "name": {
-            "type": "string",
-            "nullable": true
+            "maxLength": 30,
+            "minLength": 0,
+            "type": "string"
           },
           "phoneNumber": {
+            "minLength": 1,
             "type": "string",
-            "nullable": true
+            "format": "tel"
           }
         },
         "additionalProperties": false

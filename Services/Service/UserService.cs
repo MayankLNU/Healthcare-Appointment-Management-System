@@ -86,7 +86,7 @@ public class UserService : IUserService
         return true;
     }
 
-    public async Task<string> AuthenticateUser(LoginDTO loginDto)
+    public async Task<JWTTokenResponse> AuthenticateUser(LoginDTO loginDto)
     {
         var user = await _userCredentialRepository.GetCredByEmailAsync(loginDto.Email);
         if (user == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, user.PasswordHash))
@@ -98,6 +98,6 @@ public class UserService : IUserService
 
         var token = _tokenRepository.CreateJWTToken(new IdentityUser { Email = user.Email }, roles);
 
-        return token;
+        return new JWTTokenResponse { JwtToken = token };
     }
 }

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace AppointmentManagement.Repository.Repo
+namespace AppointmentManagement.Repositories.Repository
 {
     public class PatientRepository : IPatientRepository
     {
@@ -17,10 +17,15 @@ namespace AppointmentManagement.Repository.Repo
         }
 
         // Create
-        public async Task AddPatientAsync(Patient user)
+        public async Task<bool> AddPatientAsync(Patient user)
         {
-            await _context.Patients.AddAsync(user);
-            await _context.SaveChangesAsync();
+            if (user != null)
+            {
+                await _context.Patients.AddAsync(user);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
         }
 
         // Read
@@ -40,10 +45,15 @@ namespace AppointmentManagement.Repository.Repo
         }
 
         // Update
-        public async Task UpdatePatientAsync(Patient user)
+        public async Task<bool> UpdatePatientAsync(Patient user)
         {
-            _context.Patients.Update(user);
-            await _context.SaveChangesAsync();
+            if (user != null)
+            {
+                _context.Patients.Update(user);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            return false;
         }
 
         // Delete
