@@ -15,66 +15,98 @@ namespace AppointmentManagement.Controllers.User_Controllers
         private readonly IAvailabilityService _availabilityService;
         private readonly IConsultationService _consultationService;
         private readonly IAppointmentService _appointmentService;
+        private readonly ILogger<DoctorController> _logger;
 
-        public DoctorController(IAvailabilityService availabilityService, IConsultationService consultationService, IAppointmentService appointmentService)
+        public DoctorController(IAvailabilityService availabilityService, IConsultationService consultationService, IAppointmentService appointmentService, ILogger<DoctorController> logger)
         {
             _availabilityService = availabilityService;
             _consultationService = consultationService;
             _appointmentService = appointmentService;
+            _logger = logger;
         }
 
-        [HttpPost("Add-Timeslots")]
+
+
+        [HttpPost("Add-Availability")]
         [Authorize(Roles = "Doctor")]
-        public async Task<IActionResult> AddTimeSlots([FromBody] AvailabilityDTO availabilityDTO)
+        public async Task<IActionResult> AddAvailability([FromBody] AvailabilityDTO availabilityDTO)
         {
-            if (availabilityDTO == null)
+            try
             {
-                return BadRequest("Data is missing.");
+                var response = await _availabilityService.AddAvailabilityAsync(availabilityDTO);
+                if (response.Success)
+                {
+                    return Ok(response.Message);
+                }
+                return BadRequest(response.Message);
             }
-
-            var result = await _availabilityService.AddAvailabilityAsync(availabilityDTO);
-
-            if (result)
+            catch (Exception ex)
             {
-                return Ok("Time slots added successfully.");
+                _logger.LogError(ex, "An unexpected error occurred while adding availability.");
+                return StatusCode(500, "Internal server error");
             }
-        return BadRequest(new { Message = "Invalid Data! Please provide valid details." });
         }
+
+
 
         [HttpPost("Booked-Slots")]
         [Authorize(Roles = "Doctor")]
-        public async Task<IActionResult> GetBookedSlots([FromBody] BookedTimeSlotsDTO bookedSlotsDTO)
+        public async Task<IActionResult> GetBookedTimeSlots([FromQuery] BookedTimeSlotsDTO bookedSlotsDTO)
         {
-            var bookedSlots = await _appointmentService.GetBookedTimeSlots(bookedSlotsDTO);
-            return Ok(bookedSlots);
+            try
+            {
+                var response = await _availabilityService.GetBookedTimeSlots(bookedSlotsDTO);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unexpected error occurred while retrieving booked time slots.");
+                return StatusCode(500, "Internal server error");
+            }
         }
+
+
 
         [HttpDelete("Remove-Slot")]
         [Authorize(Roles = "Doctor")]
-        public async Task<IActionResult> RemoveSlots([FromBody] RemoveTimeSlotDTO removeTimeSlotDTO)
+        public async Task<IActionResult> RemoveTimeSlot([FromBody] RemoveTimeSlotDTO removeTimeSlotDTO)
         {
-            var removed = await _availabilityService.RemoveTimeSlotAsync(removeTimeSlotDTO);
-            if (removed) { return Ok("Slot Removed Successfully"); }
-            return BadRequest(new { Message = "Slot already booked or Invalid details!" } );
+            try
+            {
+                var response = await _availabilityService.RemoveTimeSlotAsync(removeTimeSlotDTO);
+                if (response.Success)
+                {
+                    return Ok(response.Message);
+                }
+                return BadRequest(response.Message);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "An unexpected error occurred while removing the time slot.");
+                return StatusCode(500, "Internal server error");
+            }
         }
+
+
 
         [HttpPost("Add-Prescriptons-And-Notes")]
         [Authorize(Roles = "Doctor")]
-        public async Task<IActionResult> AddPatientsPrescriptionsAndNotes([FromBody] ConsultationDTO consultationDTO)
+        public async Task<IActionResult> AddPatientsPrescriptionAndNotes([FromBody] ConsultationDTO consultationDTO)
         {
-            if (consultationDTO == null)
+            try
             {
-                return BadRequest(new { Message = "Invalid Data! Please provide valid details." });
+                var response = await _consultationService.AddPatientsPrescriptionAndNotes(consultationDTO);
+                if (response.Success)
+                {
+                    return Ok(response.Message);
+                }
+                return BadRequest(response.Message);
             }
-
-            var result = await _consultationService.AddPatientsPrescriptionAndNotes(consultationDTO);
-
-            if (result == false)
+            catch (Exception ex)
             {
-                return BadRequest(new { Message = "Something went wrong while adding data! Data not added" });
+                _logger.LogError(ex, "An unexpected error occurred while adding consultation.");
+                return StatusCode(500, "Internal server error");
             }
-
-            return Ok(new { Message = "Prescriptions and Notes added successfully." });
         }
     }
 }

@@ -5,7 +5,9 @@ namespace AppointmentManagement.Services.Interface
 {
     public interface IAvailabilityService
     {
-        Task<bool> AddAvailabilityAsync(AvailabilityDTO availabilityDTO);
-        Task<bool> RemoveTimeSlotAsync(RemoveTimeSlotDTO removeTimeSlotDTO);
+        Task<AvailabilityResponseDTO> AddAvailabilityAsync(AvailabilityDTO availabilityDTO);
+        Task<RemoveTimeSlotResponseDTO> RemoveTimeSlotAsync(RemoveTimeSlotDTO removeTimeSlotDTO);
+        Task<IEnumerable<AvailableTimeSlotResponseDTO>> GetAvailableTimeSlots(DateOnly date);
+        Task<IEnumerable<BookedTimeSlotResponseDTO>> GetBookedTimeSlots(BookedTimeSlotsDTO bookedSlotsDTO);
     }
 }

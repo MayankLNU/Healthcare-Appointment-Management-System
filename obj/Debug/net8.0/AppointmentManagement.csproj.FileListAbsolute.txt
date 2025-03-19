@@ -305,3 +305,4 @@ C:\Users\2388194\OneDrive - Cognizant\Desktop\Project\REST API\AppointmentManage
 C:\Users\2388194\OneDrive - Cognizant\Desktop\Project\REST API\AppointmentManagement\obj\Debug\net8.0\ref\AppointmentManagement.dll
 C:\Users\2388194\OneDrive - Cognizant\Desktop\Project\REST API\AppointmentManagement\bin\Debug\net8.0\BCrypt.Net-Next.dll
 C:\Users\2388194\OneDrive - Cognizant\Desktop\Project\REST API\AppointmentManagement\bin\Debug\net8.0\Dapper.dll
+C:\Users\2388194\OneDrive - Cognizant\Desktop\Project\REST API\AppointmentManagement\bin\Debug\net8.0\Serilog.dll

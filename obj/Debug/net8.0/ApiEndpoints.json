@@ -1,7 +1,7 @@
 [
   {
     "ContainingType": "AccountController",
-    "Method": "Login",
+    "Method": "AuthenticateUser",
     "RelativePath": "api/Account/Login",
     "HttpMethod": "POST",
     "IsController": true,
@@ -17,14 +17,14 @@
   },
   {
     "ContainingType": "AccountController",
-    "Method": "Register",
+    "Method": "RegisterUser",
     "RelativePath": "api/Account/Register",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "userDto",
+        "Name": "userDTO",
         "Type": "AppointmentManagement.Models.DTO.UserDTO",
         "IsRequired": true
       }
@@ -33,7 +33,23 @@
   },
   {
     "ContainingType": "AppointmentManagement.Controllers.User_Controllers.DoctorController",
-    "Method": "AddPatientsPrescriptionsAndNotes",
+    "Method": "AddAvailability",
+    "RelativePath": "api/Doctor/Add-Availability",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "availabilityDTO",
+        "Type": "AppointmentManagement.Models.DTO.AvailabilityDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AppointmentManagement.Controllers.User_Controllers.DoctorController",
+    "Method": "AddPatientsPrescriptionAndNotes",
     "RelativePath": "api/Doctor/Add-Prescriptons-And-Notes",
     "HttpMethod": "POST",
     "IsController": true,
@@ -49,39 +65,28 @@
   },
   {
     "ContainingType": "AppointmentManagement.Controllers.User_Controllers.DoctorController",
-    "Method": "AddTimeSlots",
-    "RelativePath": "api/Doctor/Add-Timeslots",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "availabilityDTO",
-        "Type": "AppointmentManagement.Models.DTO.AvailabilityDTO",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "AppointmentManagement.Controllers.User_Controllers.DoctorController",
-    "Method": "GetBookedSlots",
+    "Method": "GetBookedTimeSlots",
     "RelativePath": "api/Doctor/Booked-Slots",
     "HttpMethod": "POST",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "bookedSlotsDTO",
-        "Type": "AppointmentManagement.Models.DTO.BookedTimeSlotsDTO",
-        "IsRequired": true
+        "Name": "DoctorEmail",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "Date",
+        "Type": "System.DateOnly",
+        "IsRequired": false
       }
     ],
     "ReturnTypes": []
   },
   {
     "ContainingType": "AppointmentManagement.Controllers.User_Controllers.DoctorController",
-    "Method": "RemoveSlots",
+    "Method": "RemoveTimeSlot",
     "RelativePath": "api/Doctor/Remove-Slot",
     "HttpMethod": "DELETE",
     "IsController": true,
@@ -97,7 +102,7 @@
   },
   {
     "ContainingType": "AppointmentManagement.Controllers.User_Controllers.PatientController",
-    "Method": "GetAvailableSlots",
+    "Method": "GetAvailableTimeSlots",
     "RelativePath": "api/Patient/Available-Slots",
     "HttpMethod": "GET",
     "IsController": true,
@@ -154,6 +159,22 @@
       {
         "Name": "patientConsultationDTO",
         "Type": "AppointmentManagement.Models.DTO.PatientConsultationDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "AppointmentManagement.Controllers.User_Controllers.PatientController",
+    "Method": "UpdateAppointment",
+    "RelativePath": "api/Patient/update",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "updateAppointmentDTO",
+        "Type": "AppointmentManagement.Models.DTO.UpdateAppointmentDTO",
         "IsRequired": true
       }
     ],

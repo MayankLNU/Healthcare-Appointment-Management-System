@@ -5,7 +5,7 @@ namespace AppointmentManagement.Services.Interface
 {
     public interface IUserService
     {
-        Task<bool> RegisterUser(UserDTO user);
-        Task<JWTTokenResponse> AuthenticateUser(LoginDTO loginDto);
+        Task<UserNewAccountResponse> RegisterUser(UserDTO user);
+        Task<AuthenticateUserResponse> AuthenticateUser(LoginDTO loginDto);
     }
 }

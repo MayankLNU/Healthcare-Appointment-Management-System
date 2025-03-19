@@ -3,8 +3,6 @@ using System.Numerics;
 using AppointmentManagement.Models.Domain;
 using AppointmentManagement.Models.DTO;
 using AppointmentManagement.Repositories.Interface;
-using AppointmentManagement.Repositories.Repository;
-using AppointmentManagement.Repository;
 using AppointmentManagement.Repository.Interface;
 using AppointmentManagement.Services.Interface;
 
@@ -25,61 +23,29 @@ namespace AppointmentManagement.Services
             _patientRepository = patientRepository;
         }
 
-        public async Task<IEnumerable<AvailableTimeSlotResponseDTO>> GetAvailableTimeSlots(DateOnly date)
-        {
-            var timeSlots = await _timeSlotRepository.GetAvailableTimeSlotsByDate(date);
 
-            var response = new List<AvailableTimeSlotResponseDTO>();
-
-            foreach (var timeSlot in timeSlots)
-            {
-                var doctor = await _doctorRepository.GetDoctorByIdAsync(timeSlot.DoctorId);
-                response.Add(new AvailableTimeSlotResponseDTO
-                {
-                    DoctorId = timeSlot.DoctorId,
-                    DoctorName = doctor.Name,
-                    Date = timeSlot.Date,
-                    StartTime = timeSlot.StartTime,
-                    EndTime = timeSlot.EndTime
-                });
-            }
-
-            return response;
-        }
-
-        public async Task<IEnumerable<BookedTimeSlotResponseDTO>> GetBookedTimeSlots(BookedTimeSlotsDTO bookedSlotsDTO)
-        {
-            var doctor = await _doctorRepository.GetDoctorByEmailAsync(bookedSlotsDTO.DoctorEmail);
-            var timeSlots = await _timeSlotRepository.GetBookedTimeSlotsByDateAndDrId(bookedSlotsDTO.Date, doctor.DoctorId);
-
-            var response = new List<BookedTimeSlotResponseDTO>();
-
-            foreach (var timeSlot in timeSlots)
-            {
-                response.Add(new BookedTimeSlotResponseDTO
-                {
-                    Date = timeSlot.Date,
-                    StartTime = timeSlot.StartTime,
-                    EndTime = timeSlot.EndTime
-                });
-            }
-
-            return response;
-        }
 
         public async Task<BookAppointmentResponseDTO> BookAppointment(BookAppointmentDTO bookAppointmentDTO)
         {
-            var slotStatus = await _timeSlotRepository.GetAvailableTimeSlotsByDateTimeAndDrId(bookAppointmentDTO.Date, bookAppointmentDTO.StartTime, bookAppointmentDTO.DoctorId);
-            if (slotStatus.IsAvailable == false)
+            if (bookAppointmentDTO == null)
             {
-                return null;
+                return new BookAppointmentResponseDTO { Message = "Please enter valid details." };
+            }
+
+            var slotStatus = await _timeSlotRepository.GetAvailableTimeSlotsByDateTimeAndDrId(bookAppointmentDTO.Date, bookAppointmentDTO.StartTime, bookAppointmentDTO.DoctorId);
+            if (slotStatus == null)
+            {
+                return new BookAppointmentResponseDTO { Message = "Invalid slot details." };
+            }
+            else if (slotStatus.IsAvailable == false)
+            {
+                return new BookAppointmentResponseDTO { Message = "Slot already booked by someone else." };
             }
 
             var patient = await _patientRepository.GetPatientByEmailAsync(bookAppointmentDTO.PatientEmail);
-
             if (patient == null)
             {
-                return null;
+                return new BookAppointmentResponseDTO { Message = "Invalid patient details." };
             }
 
             var appointment = new Appointment
@@ -94,7 +60,7 @@ namespace AppointmentManagement.Services
 
             if (added == false)
             {
-                return null;
+                throw new Exception("Something went wrong while booking slot.");
             }
 
             await _timeSlotRepository.UpdateTimeSlotAvailabilityAsync(bookAppointmentDTO.Date, bookAppointmentDTO.StartTime, bookAppointmentDTO.DoctorId, false);
@@ -105,19 +71,37 @@ namespace AppointmentManagement.Services
                 AppointmentId = appointment.AppointmentId,
                 StartTime = bookAppointmentDTO.StartTime,
                 DoctorName = doctor.Name,
-                Date = bookAppointmentDTO.Date
+                Date = bookAppointmentDTO.Date,
+                Message = "Slot Booked Successfully."
             };
 
             return bookingDetails;
         }
 
+
+
         public async Task<BookAppointmentResponseDTO> UpdateAppointment(UpdateAppointmentDTO updateAppointmentDTO)
         {
+            if (updateAppointmentDTO == null)
+            {
+                return new BookAppointmentResponseDTO { Message = "Please enter valid details." };
+            }
+
             var appointment = await _appointmentRepository.GetAppointmentByIdAsync(updateAppointmentDTO.AppointmentId);
-            if (appointment == null) { return null; }
+            if (appointment == null)
+            {
+                return new BookAppointmentResponseDTO { Message = "Invalid appointment id! No slot was booked on this id." };
+            }
 
             var newAppointmentStatus = await _timeSlotRepository.GetAvailableTimeSlotsByDateTimeAndDrId(updateAppointmentDTO.Date, updateAppointmentDTO.StartTime, updateAppointmentDTO.DoctorId);
-            if (newAppointmentStatus.IsAvailable == false || newAppointmentStatus == null) { return null; }
+            if (newAppointmentStatus == null)
+            {
+                return new BookAppointmentResponseDTO { Message = "This slot does not exist." };
+            }
+            else if (newAppointmentStatus.IsAvailable == false)
+            {
+                return new BookAppointmentResponseDTO { Message = "Slot already booked by someone else." };
+            }
 
             // Update the time slot availability
             await _timeSlotRepository.UpdateTimeSlotAvailabilityAsync(appointment.Date, appointment.TimeSlot, appointment.DoctorId, true);
@@ -138,38 +122,38 @@ namespace AppointmentManagement.Services
                 AppointmentId = appointment.AppointmentId,
                 StartTime = appointment.TimeSlot,
                 DoctorName = doctor.Name,
-                Date = appointment.Date
+                Date = appointment.Date,
+                Message = "Slot Booked Successfully."
             };
 
             return bookingDetails;
         }
 
+
+
         public async Task<CancelAppointmentResponseDTO> CancelAppointmentAsync(CancelAppointmentDTO cancelAppointmentDTO)
         {
+            if (cancelAppointmentDTO == null)
+            {
+                return new CancelAppointmentResponseDTO { Success = false, Message = "Please enter valid details." };
+            }
+
             var appointment = await _appointmentRepository.GetAppointmentByIdAsync(cancelAppointmentDTO.AppointmentId);
             var patient = await _patientRepository.GetPatientByEmailAsync(cancelAppointmentDTO.PatientEmail);
 
             if (appointment == null || patient == null)
             {
-                return new CancelAppointmentResponseDTO
-                {
-                    Success = false,
-                    Message = "Appointment or Patient Not Found."
-                };
+                return new CancelAppointmentResponseDTO { Success = false, Message = "Appointment or Patient Not Found." };
             }
 
             if (patient.PatientId != appointment.PatientId)
             {
-                return new CancelAppointmentResponseDTO
-                {
-                    Success = false,
-                    Message = "Patient does not match the appointment."
-                };
+                return new CancelAppointmentResponseDTO { Success = false, Message = "Patient does not match the appointment." };
             }
 
             await _timeSlotRepository.UpdateTimeSlotAvailabilityAsync(appointment.Date, appointment.TimeSlot, appointment.DoctorId, true);
 
-            appointment.Status = "Canceled";
+            appointment.Status = "Cancelled";
             await _appointmentRepository.UpdateAppointmentAsync(appointment);
 
             return new CancelAppointmentResponseDTO

@@ -26,6 +26,12 @@ namespace AppointmentManagement.Models.DTO
         public string PhoneNumber { get; set; }
     }
 
+    public class UserNewAccountResponse
+    {
+        public bool Success { get; set; }
+        public string Message { get; set; }
+    }
+
     public class UserResponseDTO
     {
         public string Email { get; set; }
@@ -47,8 +53,10 @@ namespace AppointmentManagement.Models.DTO
         public string Password { get; set; }
     }
 
-    public class JWTTokenResponse
+    public class AuthenticateUserResponse
     {
+        public int? UserId { get; set; }
         public string JwtToken { get; set; }
+        public string Message { get; set; }
     }
 }

@@ -67,7 +67,7 @@
         }
       }
     },
-    "/api/Doctor/Add-Timeslots": {
+    "/api/Doctor/Add-Availability": {
       "post": {
         "tags": [
           "Doctor"
@@ -103,25 +103,27 @@
         "tags": [
           "Doctor"
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/BookedTimeSlotsDTO"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/BookedTimeSlotsDTO"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/BookedTimeSlotsDTO"
-              }
+        "parameters": [
+          {
+            "name": "DoctorEmail",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "pattern": "^[a-zA-Z0-9._%+-]+@gmail\\.com$",
+              "type": "string",
+              "format": "email"
+            }
+          },
+          {
+            "name": "Date",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
             }
           }
-        },
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -275,6 +277,37 @@
         }
       }
     },
+    "/api/Patient/update": {
+      "post": {
+        "tags": [
+          "Patient"
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAppointmentDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAppointmentDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/UpdateAppointmentDTO"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    },
     "/api/Patient/Cancel-Appointment": {
       "post": {
         "tags": [
@@ -396,26 +429,6 @@
             "pattern": "^[a-zA-Z0-9._%+-]+@gmail\\.com$",
             "type": "string",
             "format": "email"
-          }
-        },
-        "additionalProperties": false
-      },
-      "BookedTimeSlotsDTO": {
-        "required": [
-          "date",
-          "doctorEmail"
-        ],
-        "type": "object",
-        "properties": {
-          "doctorEmail": {
-            "minLength": 1,
-            "pattern": "^[a-zA-Z0-9._%+-]+@gmail\\.com$",
-            "type": "string",
-            "format": "email"
-          },
-          "date": {
-            "type": "string",
-            "format": "date"
           }
         },
         "additionalProperties": false

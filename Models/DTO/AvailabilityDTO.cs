@@ -18,4 +18,10 @@ namespace AppointmentManagement.Models.DTO
         [Required]
         public TimeOnly EndTime { get; set; }
     }
+
+    public class AvailabilityResponseDTO
+    {
+        public bool Success { get; set; }
+        public string Message { get; set; }
+    }
 }

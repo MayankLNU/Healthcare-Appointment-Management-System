@@ -3,6 +3,7 @@ using AppointmentManagement.Models.DTO;
 using AppointmentManagement.Repositories.Interface;
 using AppointmentManagement.Repository.Interface;
 using AppointmentManagement.Services.Interface;
+using Azure;
 using Microsoft.AspNetCore.Identity;
 
 public class UserService : IUserService
@@ -22,10 +23,28 @@ public class UserService : IUserService
         _tokenRepository = tokenRepository;
     }
 
-    public async Task<bool> RegisterUser(UserDTO userDTO)
+
+
+    public async Task<UserNewAccountResponse> RegisterUser(UserDTO userDTO)
     {
+        if (userDTO == null)
+        {
+            return new UserNewAccountResponse { Success = false, Message = "User details cannot be null." };
+        }
+
+        if (userDTO.Role != "Doctor" && userDTO.Role != "Patient")
+        {
+            return new UserNewAccountResponse { Success = false, Message = "Invalid role specified." };
+        }
+
         if (userDTO.Role == "Doctor")
         {
+            var check = await _doctorRepository.GetDoctorByEmailAsync(userDTO.Email);
+            if (check != null)
+            {
+                return new UserNewAccountResponse { Success = false, Message = "User already exists." };
+            }
+
             var user = new Doctor
             {
                 Email = userDTO.Email,
@@ -59,6 +78,12 @@ public class UserService : IUserService
         }
         else if (userDTO.Role == "Patient")
         {
+            var check = await _patientRepository.GetPatientByEmailAsync(userDTO.Email);
+            if (check != null)
+            {
+                return new UserNewAccountResponse { Success = false, Message = "User already exists." };
+            }
+
             var user = new Patient
             {
                 Email = userDTO.Email,
@@ -83,21 +108,46 @@ public class UserService : IUserService
             };
             await _userCredentialRepository.AddUserCredentialAsync(cred);
         }
-        return true;
+        return new UserNewAccountResponse { Success = true, Message = "User registered successfully. Please Login!!" };
     }
 
-    public async Task<JWTTokenResponse> AuthenticateUser(LoginDTO loginDto)
+
+
+    public async Task<AuthenticateUserResponse> AuthenticateUser(LoginDTO loginDto)
     {
         var user = await _userCredentialRepository.GetCredByEmailAsync(loginDto.Email);
-        if (user == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, user.PasswordHash))
+
+        if (user == null) {
+            return new AuthenticateUserResponse { Message = "User not found." };
+        }
+        if (!BCrypt.Net.BCrypt.Verify(loginDto.Password, user.PasswordHash))
         {
-            return null;
+            return new AuthenticateUserResponse { Message = "Invalid Credentials. Please check email and password." };
         }
 
         var roles = new List<string> { user.Role };
 
         var token = _tokenRepository.CreateJWTToken(new IdentityUser { Email = user.Email }, roles);
 
-        return new JWTTokenResponse { JwtToken = token };
+        if (user.Role == "Doctor")
+        {
+            return new AuthenticateUserResponse
+            {
+                UserId = user.DoctorId,
+                JwtToken = token,
+                Message = "Welcome Doctor."
+            };
+        }
+        else if (user.Role == "Patient")
+        {
+            return new AuthenticateUserResponse
+            {
+                UserId = user.PatientId,
+                JwtToken = token,
+                Message = "Login Successful."
+            };
+        }
+
+        throw new InvalidOperationException("Invalid user role.");
     }
 }

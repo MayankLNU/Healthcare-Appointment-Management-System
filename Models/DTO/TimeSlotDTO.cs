@@ -4,6 +4,7 @@ namespace AppointmentManagement.Models.DTO
 {
     public class AvailableTimeSlotResponseDTO
     {
+        public string Message { get; set; }
         public int DoctorId { get; set; }
         public string DoctorName { get; set; }
         public DateOnly Date { get; set; }
@@ -17,6 +18,7 @@ namespace AppointmentManagement.Models.DTO
         public DateOnly Date { get; set; }
         public TimeOnly StartTime { get; set; }
         public TimeOnly EndTime { get; set; }
+        public string Message { get; set; }
 
     }
 
@@ -43,5 +45,11 @@ namespace AppointmentManagement.Models.DTO
 
         [Required]
         public TimeOnly StartTime { get; set; }
+    }
+
+    public class RemoveTimeSlotResponseDTO
+    {
+        public bool Success { get; set; }
+        public string Message { get; set; }
     }
 }

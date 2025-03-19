@@ -17,8 +17,16 @@ namespace AppointmentManagement.Services.Service
             _appointmentRepository = appointmentRepository;
         }
 
-        public async Task<bool> AddPatientsPrescriptionAndNotes(ConsultationDTO consultationDTO)
+
+
+        public async Task<ConsultationResponseDTO> AddPatientsPrescriptionAndNotes(ConsultationDTO consultationDTO)
         {
+            var appointment = await _appointmentRepository.GetAppointmentByIdAsync(consultationDTO.AppointmentId);
+            if (appointment == null)
+            {
+                return new ConsultationResponseDTO { Success = false, Message = "Appointment not found with this id." };
+            }
+
             var consultation = new Consultation
             {
                 Notes = consultationDTO.Notes,
@@ -28,40 +36,36 @@ namespace AppointmentManagement.Services.Service
 
             var result = await _consultationRepository.AddConsultationAsync(consultation);
 
-            if (result)
+            if (!result)
             {
-                var appointment = await _appointmentRepository.GetAppointmentByIdAsync(consultation.AppointmentId);
-                if (appointment != null)
-                {
-                    appointment.Status = "Completed";
-                    await _appointmentRepository.UpdateAppointmentAsync(appointment);
-                }
-                else
-                {
-                    throw new InvalidOperationException("AppointmentId does not exist.");
-                }
+                throw new Exception("Failed to add consultation. Please try again.");
             }
 
-            return result;
+            appointment.Status = "Completed";
+            await _appointmentRepository.UpdateAppointmentAsync(appointment);
+
+            return new ConsultationResponseDTO { Success = true, Message = "Prescription and notes added successfully." };
         }
 
-        public async Task<ConsultationDTO> ReadPrescriptionsAndNotes(PatientConsultationDTO patientConsultationDTO)
+
+
+        public async Task<PatientConsultationResponseDTO> ReadPrescriptionsAndNotes(PatientConsultationDTO patientConsultationDTO)
         {
             var consultation = await _consultationRepository.GetConsultationByAppointmentIdAsync(patientConsultationDTO.AppointmentId);
 
             if (consultation == null)
             {
-                return null;
+                return new PatientConsultationResponseDTO { Success = false, Message = "No record found on this id." };
             }
 
-            var foundConsultation = new ConsultationDTO
+            return new PatientConsultationResponseDTO
             {
                 AppointmentId = patientConsultationDTO.AppointmentId,
                 Notes = consultation.Notes,
-                Prescription = consultation.Prescription
+                Prescription = consultation.Prescription,
+                Message = "Please take care of yourself :-)",
+                Success = true
             };
-
-            return foundConsultation;
         }
     }
 }
