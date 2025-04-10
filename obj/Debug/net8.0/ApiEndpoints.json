@@ -72,14 +72,9 @@
     "Order": 0,
     "Parameters": [
       {
-        "Name": "DoctorEmail",
-        "Type": "System.String",
-        "IsRequired": false
-      },
-      {
-        "Name": "Date",
-        "Type": "System.DateOnly",
-        "IsRequired": false
+        "Name": "bookedSlotsDTO",
+        "Type": "AppointmentManagement.Models.DTO.BookedTimeSlotsDTO",
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []
@@ -103,7 +98,7 @@
   {
     "ContainingType": "AppointmentManagement.Controllers.User_Controllers.PatientController",
     "Method": "GetAvailableTimeSlots",
-    "RelativePath": "api/Patient/Available-Slots",
+    "RelativePath": "api/Patient/Available-Slots/{date}",
     "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
@@ -111,7 +106,7 @@
       {
         "Name": "date",
         "Type": "System.DateOnly",
-        "IsRequired": false
+        "IsRequired": true
       }
     ],
     "ReturnTypes": []

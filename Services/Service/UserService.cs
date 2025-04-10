@@ -29,12 +29,12 @@ public class UserService : IUserService
     {
         if (userDTO == null)
         {
-            return new UserNewAccountResponse { Success = false, Message = "User details cannot be null." };
+            return new UserNewAccountResponse { Message = "User details cannot be null." };
         }
 
         if (userDTO.Role != "Doctor" && userDTO.Role != "Patient")
         {
-            return new UserNewAccountResponse { Success = false, Message = "Invalid role specified." };
+            return new UserNewAccountResponse { Message = "Invalid role specified." };
         }
 
         if (userDTO.Role == "Doctor")
@@ -42,7 +42,7 @@ public class UserService : IUserService
             var check = await _doctorRepository.GetDoctorByEmailAsync(userDTO.Email);
             if (check != null)
             {
-                return new UserNewAccountResponse { Success = false, Message = "User already exists." };
+                return new UserNewAccountResponse { Message = "User already exists." };
             }
 
             var user = new Doctor
@@ -81,7 +81,7 @@ public class UserService : IUserService
             var check = await _patientRepository.GetPatientByEmailAsync(userDTO.Email);
             if (check != null)
             {
-                return new UserNewAccountResponse { Success = false, Message = "User already exists." };
+                return new UserNewAccountResponse { Message = "User already exists." };
             }
 
             var user = new Patient
@@ -108,7 +108,7 @@ public class UserService : IUserService
             };
             await _userCredentialRepository.AddUserCredentialAsync(cred);
         }
-        return new UserNewAccountResponse { Success = true, Message = "User registered successfully. Please Login!!" };
+        return new UserNewAccountResponse { Message = "User registered successfully. Please Login!!" };
     }
 
 
@@ -131,18 +131,26 @@ public class UserService : IUserService
 
         if (user.Role == "Doctor")
         {
+            var name = await _doctorRepository.GetDoctorByEmailAsync(user.Email);
             return new AuthenticateUserResponse
             {
                 UserId = user.DoctorId,
+                Name = name.Name,
+                Email = loginDto.Email,
+                Role = user.Role,
                 JwtToken = token,
                 Message = "Welcome Doctor."
             };
         }
         else if (user.Role == "Patient")
         {
+            var name = await _patientRepository.GetPatientByEmailAsync(user.Email);
             return new AuthenticateUserResponse
             {
                 UserId = user.PatientId,
+                Name = name.Name,
+                Email = loginDto.Email,
+                Role = user.Role,
                 JwtToken = token,
                 Message = "Login Successful."
             };

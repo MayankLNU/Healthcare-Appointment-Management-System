@@ -4515,11 +4515,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\2388194\\OneDrive - Cognizant\\Desktop\\Project\\REST API\\AppointmentManagement\\AppointmentManagement.csproj",
+      "projectUniqueName": "C:\\Users\\2388194\\OneDrive - Cognizant\\Desktop\\Project\\Backend\\REST API\\AppointmentManagement\\AppointmentManagement.csproj",
       "projectName": "AppointmentManagement",
-      "projectPath": "C:\\Users\\2388194\\OneDrive - Cognizant\\Desktop\\Project\\REST API\\AppointmentManagement\\AppointmentManagement.csproj",
+      "projectPath": "C:\\Users\\2388194\\OneDrive - Cognizant\\Desktop\\Project\\Backend\\REST API\\AppointmentManagement\\AppointmentManagement.csproj",
       "packagesPath": "C:\\Users\\2388194\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\2388194\\OneDrive - Cognizant\\Desktop\\Project\\REST API\\AppointmentManagement\\obj\\",
+      "outputPath": "C:\\Users\\2388194\\OneDrive - Cognizant\\Desktop\\Project\\Backend\\REST API\\AppointmentManagement\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -28,7 +28,6 @@ namespace AppointmentManagement.Models.DTO
 
     public class UserNewAccountResponse
     {
-        public bool Success { get; set; }
         public string Message { get; set; }
     }
 
@@ -56,6 +55,9 @@ namespace AppointmentManagement.Models.DTO
     public class AuthenticateUserResponse
     {
         public int? UserId { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+        public string Role { get; set; }
         public string JwtToken { get; set; }
         public string Message { get; set; }
     }

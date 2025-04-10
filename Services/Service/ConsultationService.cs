@@ -27,6 +27,11 @@ namespace AppointmentManagement.Services.Service
                 return new ConsultationResponseDTO { Success = false, Message = "Appointment not found with this id." };
             }
 
+            if (appointment.Status == "Completed")
+            {
+                return new ConsultationResponseDTO { Success = false, Message = "Already Added!" };
+            }
+
             var consultation = new Consultation
             {
                 Notes = consultationDTO.Notes,

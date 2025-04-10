@@ -103,27 +103,25 @@
         "tags": [
           "Doctor"
         ],
-        "parameters": [
-          {
-            "name": "DoctorEmail",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "pattern": "^[a-zA-Z0-9._%+-]+@gmail\\.com$",
-              "type": "string",
-              "format": "email"
-            }
-          },
-          {
-            "name": "Date",
-            "in": "query",
-            "required": true,
-            "schema": {
-              "type": "string",
-              "format": "date"
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookedTimeSlotsDTO"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookedTimeSlotsDTO"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/BookedTimeSlotsDTO"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "OK"
@@ -193,7 +191,7 @@
         }
       }
     },
-    "/api/Patient/Available-Slots": {
+    "/api/Patient/Available-Slots/{date}": {
       "get": {
         "tags": [
           "Patient"
@@ -201,7 +199,8 @@
         "parameters": [
           {
             "name": "date",
-            "in": "query",
+            "in": "path",
+            "required": true,
             "schema": {
               "type": "string",
               "format": "date"
@@ -425,6 +424,26 @@
             "format": "int32"
           },
           "patientEmail": {
+            "minLength": 1,
+            "pattern": "^[a-zA-Z0-9._%+-]+@gmail\\.com$",
+            "type": "string",
+            "format": "email"
+          }
+        },
+        "additionalProperties": false
+      },
+      "BookedTimeSlotsDTO": {
+        "required": [
+          "date",
+          "doctorEmail"
+        ],
+        "type": "object",
+        "properties": {
+          "date": {
+            "type": "string",
+            "format": "date"
+          },
+          "doctorEmail": {
             "minLength": 1,
             "pattern": "^[a-zA-Z0-9._%+-]+@gmail\\.com$",
             "type": "string",

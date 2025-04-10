@@ -25,12 +25,12 @@ namespace AppointmentManagement.Models.DTO
     public class BookedTimeSlotsDTO
     {
         [Required]
+        public DateOnly Date { get; set; }
+
+        [Required]
         [EmailAddress]
         [RegularExpression(@"^[a-zA-Z0-9._%+-]+@gmail\.com$", ErrorMessage = "Email must end with @gmail.com")]
         public string DoctorEmail { get; set; }
-
-        [Required]
-        public DateOnly Date { get; set; }
     }
 
     public class RemoveTimeSlotDTO

@@ -36,7 +36,7 @@ namespace AppointmentManagement.Controllers.User_Controllers
                 var response = await _availabilityService.AddAvailabilityAsync(availabilityDTO);
                 if (response.Success)
                 {
-                    return Ok(response.Message);
+                    return Ok(response);
                 }
                 return BadRequest(response.Message);
             }
@@ -51,7 +51,7 @@ namespace AppointmentManagement.Controllers.User_Controllers
 
         [HttpPost("Booked-Slots")]
         [Authorize(Roles = "Doctor")]
-        public async Task<IActionResult> GetBookedTimeSlots([FromQuery] BookedTimeSlotsDTO bookedSlotsDTO)
+        public async Task<IActionResult> GetBookedTimeSlots([FromBody] BookedTimeSlotsDTO bookedSlotsDTO)
         {
             try
             {
@@ -76,7 +76,7 @@ namespace AppointmentManagement.Controllers.User_Controllers
                 var response = await _availabilityService.RemoveTimeSlotAsync(removeTimeSlotDTO);
                 if (response.Success)
                 {
-                    return Ok(response.Message);
+                    return Ok(response);
                 }
                 return BadRequest(response.Message);
             }
@@ -98,7 +98,7 @@ namespace AppointmentManagement.Controllers.User_Controllers
                 var response = await _consultationService.AddPatientsPrescriptionAndNotes(consultationDTO);
                 if (response.Success)
                 {
-                    return Ok(response.Message);
+                    return Ok(response);
                 }
                 return BadRequest(response.Message);
             }

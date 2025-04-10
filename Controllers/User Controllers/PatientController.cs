@@ -26,9 +26,9 @@ namespace AppointmentManagement.Controllers.User_Controllers
 
 
 
-        [HttpGet("Available-Slots")]
+        [HttpGet("Available-Slots/{date}")]
         [Authorize(Roles = "Patient")]
-        public async Task<IActionResult> GetAvailableTimeSlots([FromQuery] DateOnly date)
+        public async Task<IActionResult> GetAvailableTimeSlots(DateOnly date)
         {
             try
             {
@@ -55,7 +55,7 @@ namespace AppointmentManagement.Controllers.User_Controllers
                 {
                     return Ok(response);
                 }
-                return BadRequest(response);
+                return BadRequest(response.Message);
             }
             catch (Exception ex)
             {

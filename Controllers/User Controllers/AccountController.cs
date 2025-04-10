@@ -17,14 +17,13 @@ public class AccountController : ControllerBase
     }
 
 
-
     [HttpPost("Register")]
     public async Task<IActionResult> RegisterUser([FromBody] UserDTO userDTO)
     {
         try
         {
             var result = await _userService.RegisterUser(userDTO);
-            return result.Success ? Ok(result.Message) : BadRequest(result.Message);
+            return Ok(result);
         }
         catch (Exception ex)
         {
@@ -37,7 +36,7 @@ public class AccountController : ControllerBase
 
     [HttpPost("Login")]
     public async Task<IActionResult> AuthenticateUser([FromBody] LoginDTO loginDto)
-    {
+     {
         try
         {
             var response = await _userService.AuthenticateUser(loginDto);
@@ -47,11 +46,6 @@ public class AccountController : ControllerBase
             }
             return Ok(response);
             
-        }
-        catch (AuthenticationException ex)
-        {
-            _logger.LogWarning(ex, "Authentication failed: {Message}", ex.Message);
-            return BadRequest(new { Message = ex.Message });
         }
         catch (Exception ex)
         {
