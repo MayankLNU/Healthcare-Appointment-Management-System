@@ -24,7 +24,7 @@ namespace AppointmentManagement.Models.DTO
 
     public class PatientConsultationResponseDTO
     {
-        public bool Success = false;
+        public bool Success { get; set; }
         public int AppointmentId { get; set; }
         public string Prescription { get; set; }
         public string Notes { get; set; }

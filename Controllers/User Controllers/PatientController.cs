@@ -68,7 +68,6 @@ namespace AppointmentManagement.Controllers.User_Controllers
 
         [HttpPut("Update-Appointment")]
         [Authorize(Roles = "Patient")]
-        [HttpPost("update")]
         public async Task<IActionResult> UpdateAppointment([FromBody] UpdateAppointmentDTO updateAppointmentDTO)
         {
             try
@@ -78,7 +77,7 @@ namespace AppointmentManagement.Controllers.User_Controllers
                 {
                     return Ok(response);
                 }
-                return BadRequest(response);
+                return BadRequest(response.Message);
             }
             catch (Exception ex)
             {
@@ -98,7 +97,7 @@ namespace AppointmentManagement.Controllers.User_Controllers
                 var response = await _appointmentService.CancelAppointmentAsync(cancelAppointmentDTO);
                 if (response.Success)
                 {
-                    return Ok(response.Message);
+                    return Ok(response);
                 }
                 return BadRequest(response.Message);
             }
@@ -111,13 +110,13 @@ namespace AppointmentManagement.Controllers.User_Controllers
 
 
 
-        [HttpPost("Read-Prescriptions-And-Notes")]
+        [HttpGet("Read-Prescriptions-And-Notes/{appointmentId}")]
         [Authorize(Roles = "Patient")]
-        public async Task<IActionResult> ReadPrescriptionsAndNotes([FromBody] PatientConsultationDTO patientConsultationDTO)
+        public async Task<IActionResult> ReadPrescriptionsAndNotes(int appointmentId)
         {
             try
             {
-                var response = await _consultationService.ReadPrescriptionsAndNotes(patientConsultationDTO);
+                var response = await _consultationService.ReadPrescriptionsAndNotes(appointmentId);
                 if (response.Success)
                 {
                     return Ok(response);

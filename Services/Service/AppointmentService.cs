@@ -135,20 +135,30 @@ namespace AppointmentManagement.Services
         {
             if (cancelAppointmentDTO == null)
             {
-                return new CancelAppointmentResponseDTO { Success = false, Message = "Please enter valid details." };
+                return new CancelAppointmentResponseDTO { Success = false, Message = "Please enter valid details" };
             }
 
             var appointment = await _appointmentRepository.GetAppointmentByIdAsync(cancelAppointmentDTO.AppointmentId);
             var patient = await _patientRepository.GetPatientByEmailAsync(cancelAppointmentDTO.PatientEmail);
 
-            if (appointment == null || patient == null)
+            if (appointment == null)
             {
-                return new CancelAppointmentResponseDTO { Success = false, Message = "Appointment or Patient Not Found." };
+                return new CancelAppointmentResponseDTO { Success = false, Message = "This appointment does not exists" };
+            }
+
+            if (appointment.Status == "Cancelled")
+            {
+                return new CancelAppointmentResponseDTO { Success = false, Message = "This appointment is already cancelled" };
+            }
+
+            if (patient == null)
+            {
+                return new CancelAppointmentResponseDTO { Success = false, Message = "Patient Not Found" };
             }
 
             if (patient.PatientId != appointment.PatientId)
             {
-                return new CancelAppointmentResponseDTO { Success = false, Message = "Patient does not match the appointment." };
+                return new CancelAppointmentResponseDTO { Success = false, Message = "Patient does not match the appointment" };
             }
 
             await _timeSlotRepository.UpdateTimeSlotAvailabilityAsync(appointment.Date, appointment.TimeSlot, appointment.DoctorId, true);

@@ -54,9 +54,9 @@ namespace AppointmentManagement.Services.Service
 
 
 
-        public async Task<PatientConsultationResponseDTO> ReadPrescriptionsAndNotes(PatientConsultationDTO patientConsultationDTO)
+        public async Task<PatientConsultationResponseDTO> ReadPrescriptionsAndNotes(int appointmentId)
         {
-            var consultation = await _consultationRepository.GetConsultationByAppointmentIdAsync(patientConsultationDTO.AppointmentId);
+            var consultation = await _consultationRepository.GetConsultationByAppointmentIdAsync(appointmentId);
 
             if (consultation == null)
             {
@@ -65,10 +65,10 @@ namespace AppointmentManagement.Services.Service
 
             return new PatientConsultationResponseDTO
             {
-                AppointmentId = patientConsultationDTO.AppointmentId,
+                AppointmentId = appointmentId,
                 Notes = consultation.Notes,
                 Prescription = consultation.Prescription,
-                Message = "Please take care of yourself :-)",
+                Message = "Please take care of yourself",
                 Success = true
             };
         }

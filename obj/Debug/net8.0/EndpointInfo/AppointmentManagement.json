@@ -276,37 +276,6 @@
         }
       }
     },
-    "/api/Patient/update": {
-      "post": {
-        "tags": [
-          "Patient"
-        ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateAppointmentDTO"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateAppointmentDTO"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/UpdateAppointmentDTO"
-              }
-            }
-          }
-        },
-        "responses": {
-          "200": {
-            "description": "OK"
-          }
-        }
-      }
-    },
     "/api/Patient/Cancel-Appointment": {
       "post": {
         "tags": [
@@ -338,30 +307,22 @@
         }
       }
     },
-    "/api/Patient/Read-Prescriptions-And-Notes": {
-      "post": {
+    "/api/Patient/Read-Prescriptions-And-Notes/{appointmentId}": {
+      "get": {
         "tags": [
           "Patient"
         ],
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PatientConsultationDTO"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/PatientConsultationDTO"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/PatientConsultationDTO"
-              }
+        "parameters": [
+          {
+            "name": "appointmentId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32"
             }
           }
-        },
+        ],
         "responses": {
           "200": {
             "description": "OK"
@@ -510,19 +471,6 @@
             "minLength": 1,
             "type": "string",
             "format": "password"
-          }
-        },
-        "additionalProperties": false
-      },
-      "PatientConsultationDTO": {
-        "required": [
-          "appointmentId"
-        ],
-        "type": "object",
-        "properties": {
-          "appointmentId": {
-            "type": "integer",
-            "format": "int32"
           }
         },
         "additionalProperties": false

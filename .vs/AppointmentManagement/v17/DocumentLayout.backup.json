@@ -3,20 +3,32 @@
   "WorkspaceRootPath": "C:\\Users\\2388194\\OneDrive - Cognizant\\Desktop\\Project\\Backend\\REST API\\AppointmentManagement\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{3D7FABDE-BABF-492E-B761-5B51191E78C7}|AppointmentManagement.csproj|c:\\users\\2388194\\onedrive - cognizant\\desktop\\project\\backend\\rest api\\appointmentmanagement\\services\\service\\appointmentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D7FABDE-BABF-492E-B761-5B51191E78C7}|AppointmentManagement.csproj|solutionrelative:services\\service\\appointmentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{3D7FABDE-BABF-492E-B761-5B51191E78C7}|AppointmentManagement.csproj|c:\\users\\2388194\\onedrive - cognizant\\desktop\\project\\backend\\rest api\\appointmentmanagement\\controllers\\user controllers\\patientcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3D7FABDE-BABF-492E-B761-5B51191E78C7}|AppointmentManagement.csproj|solutionrelative:controllers\\user controllers\\patientcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3D7FABDE-BABF-492E-B761-5B51191E78C7}|AppointmentManagement.csproj|c:\\users\\2388194\\onedrive - cognizant\\desktop\\project\\backend\\rest api\\appointmentmanagement\\services\\service\\appointmentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3D7FABDE-BABF-492E-B761-5B51191E78C7}|AppointmentManagement.csproj|solutionrelative:services\\service\\appointmentservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3D7FABDE-BABF-492E-B761-5B51191E78C7}|AppointmentManagement.csproj|c:\\users\\2388194\\onedrive - cognizant\\desktop\\project\\backend\\rest api\\appointmentmanagement\\services\\service\\consultationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D7FABDE-BABF-492E-B761-5B51191E78C7}|AppointmentManagement.csproj|solutionrelative:services\\service\\consultationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D7FABDE-BABF-492E-B761-5B51191E78C7}|AppointmentManagement.csproj|c:\\users\\2388194\\onedrive - cognizant\\desktop\\project\\backend\\rest api\\appointmentmanagement\\services\\interface\\iconsultationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D7FABDE-BABF-492E-B761-5B51191E78C7}|AppointmentManagement.csproj|solutionrelative:services\\interface\\iconsultationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{3D7FABDE-BABF-492E-B761-5B51191E78C7}|AppointmentManagement.csproj|c:\\users\\2388194\\onedrive - cognizant\\desktop\\project\\backend\\rest api\\appointmentmanagement\\models\\dto\\consultationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D7FABDE-BABF-492E-B761-5B51191E78C7}|AppointmentManagement.csproj|solutionrelative:models\\dto\\consultationdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{3D7FABDE-BABF-492E-B761-5B51191E78C7}|AppointmentManagement.csproj|c:\\users\\2388194\\onedrive - cognizant\\desktop\\project\\backend\\rest api\\appointmentmanagement\\controllers\\user controllers\\doctorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{3D7FABDE-BABF-492E-B761-5B51191E78C7}|AppointmentManagement.csproj|solutionrelative:controllers\\user controllers\\doctorcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{3D7FABDE-BABF-492E-B761-5B51191E78C7}|AppointmentManagement.csproj|c:\\users\\2388194\\onedrive - cognizant\\desktop\\project\\backend\\rest api\\appointmentmanagement\\services\\service\\consultationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{3D7FABDE-BABF-492E-B761-5B51191E78C7}|AppointmentManagement.csproj|solutionrelative:services\\service\\consultationservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{3D7FABDE-BABF-492E-B761-5B51191E78C7}|AppointmentManagement.csproj|c:\\users\\2388194\\onedrive - cognizant\\desktop\\project\\backend\\rest api\\appointmentmanagement\\migrations\\20250411093356_fresh start.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{3D7FABDE-BABF-492E-B761-5B51191E78C7}|AppointmentManagement.csproj|solutionrelative:migrations\\20250411093356_fresh start.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -26,7 +38,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 4,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -46,55 +58,88 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "PatientController.cs",
-              "DocumentMoniker": "C:\\Users\\2388194\\OneDrive - Cognizant\\Desktop\\Project\\Backend\\REST API\\AppointmentManagement\\Controllers\\User Controllers\\PatientController.cs",
-              "RelativeDocumentMoniker": "Controllers\\User Controllers\\PatientController.cs",
-              "ToolTip": "C:\\Users\\2388194\\OneDrive - Cognizant\\Desktop\\Project\\Backend\\REST API\\AppointmentManagement\\Controllers\\User Controllers\\PatientController.cs*",
-              "RelativeToolTip": "Controllers\\User Controllers\\PatientController.cs*",
-              "ViewState": "AgIAACsAAAAAAAAAAAAkwDMAAAANAAAAAAAAAA==",
+              "DocumentIndex": 6,
+              "Title": "20250411093356_Fresh Start.cs",
+              "DocumentMoniker": "C:\\Users\\2388194\\OneDrive - Cognizant\\Desktop\\Project\\Backend\\REST API\\AppointmentManagement\\Migrations\\20250411093356_Fresh Start.cs",
+              "RelativeDocumentMoniker": "Migrations\\20250411093356_Fresh Start.cs",
+              "ToolTip": "C:\\Users\\2388194\\OneDrive - Cognizant\\Desktop\\Project\\Backend\\REST API\\AppointmentManagement\\Migrations\\20250411093356_Fresh Start.cs",
+              "RelativeToolTip": "Migrations\\20250411093356_Fresh Start.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-10T06:38:15.009Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-11T09:33:59.009Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IConsultationService.cs",
+              "DocumentMoniker": "C:\\Users\\2388194\\OneDrive - Cognizant\\Desktop\\Project\\Backend\\REST API\\AppointmentManagement\\Services\\Interface\\IConsultationService.cs",
+              "RelativeDocumentMoniker": "Services\\Interface\\IConsultationService.cs",
+              "ToolTip": "C:\\Users\\2388194\\OneDrive - Cognizant\\Desktop\\Project\\Backend\\REST API\\AppointmentManagement\\Services\\Interface\\IConsultationService.cs",
+              "RelativeToolTip": "Services\\Interface\\IConsultationService.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAABYAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-11T04:05:23.592Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "ConsultationDTO.cs",
+              "DocumentMoniker": "C:\\Users\\2388194\\OneDrive - Cognizant\\Desktop\\Project\\Backend\\REST API\\AppointmentManagement\\Models\\DTO\\ConsultationDTO.cs",
+              "RelativeDocumentMoniker": "Models\\DTO\\ConsultationDTO.cs",
+              "ToolTip": "C:\\Users\\2388194\\OneDrive - Cognizant\\Desktop\\Project\\Backend\\REST API\\AppointmentManagement\\Models\\DTO\\ConsultationDTO.cs",
+              "RelativeToolTip": "Models\\DTO\\ConsultationDTO.cs",
+              "ViewState": "AgIAAAkAAAAAAAAAAAAzwBIAAAARAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T09:38:05.79Z"
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "PatientController.cs",
+              "DocumentMoniker": "C:\\Users\\2388194\\OneDrive - Cognizant\\Desktop\\Project\\Backend\\REST API\\AppointmentManagement\\Controllers\\User Controllers\\PatientController.cs",
+              "RelativeDocumentMoniker": "Controllers\\User Controllers\\PatientController.cs",
+              "ToolTip": "C:\\Users\\2388194\\OneDrive - Cognizant\\Desktop\\Project\\Backend\\REST API\\AppointmentManagement\\Controllers\\User Controllers\\PatientController.cs",
+              "RelativeToolTip": "Controllers\\User Controllers\\PatientController.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAE0AAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-04-10T06:38:15.009Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
               "Title": "AppointmentService.cs",
               "DocumentMoniker": "C:\\Users\\2388194\\OneDrive - Cognizant\\Desktop\\Project\\Backend\\REST API\\AppointmentManagement\\Services\\Service\\AppointmentService.cs",
               "RelativeDocumentMoniker": "Services\\Service\\AppointmentService.cs",
               "ToolTip": "C:\\Users\\2388194\\OneDrive - Cognizant\\Desktop\\Project\\Backend\\REST API\\AppointmentManagement\\Services\\Service\\AppointmentService.cs",
               "RelativeToolTip": "Services\\Service\\AppointmentService.cs",
-              "ViewState": "AgIAADwAAAAAAAAAAAAYwEQAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAADwAAAAAAAAAAAAmwFMAAAAIAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-04-10T05:38:45.06Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 5,
               "Title": "DoctorController.cs",
               "DocumentMoniker": "C:\\Users\\2388194\\OneDrive - Cognizant\\Desktop\\Project\\Backend\\REST API\\AppointmentManagement\\Controllers\\User Controllers\\DoctorController.cs",
               "RelativeDocumentMoniker": "Controllers\\User Controllers\\DoctorController.cs",
               "ToolTip": "C:\\Users\\2388194\\OneDrive - Cognizant\\Desktop\\Project\\Backend\\REST API\\AppointmentManagement\\Controllers\\User Controllers\\DoctorController.cs",
               "RelativeToolTip": "Controllers\\User Controllers\\DoctorController.cs",
-              "ViewState": "AgIAAFgAAAAAAAAAAAAkwGgAAAAMAAAAAAAAAA==",
+              "ViewState": "AgIAAGMAAAAAAAAAAAAowGgAAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-09T08:28:25.517Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-09T08:28:25.517Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 2,
               "Title": "ConsultationService.cs",
               "DocumentMoniker": "C:\\Users\\2388194\\OneDrive - Cognizant\\Desktop\\Project\\Backend\\REST API\\AppointmentManagement\\Services\\Service\\ConsultationService.cs",
               "RelativeDocumentMoniker": "Services\\Service\\ConsultationService.cs",
               "ToolTip": "C:\\Users\\2388194\\OneDrive - Cognizant\\Desktop\\Project\\Backend\\REST API\\AppointmentManagement\\Services\\Service\\ConsultationService.cs",
               "RelativeToolTip": "Services\\Service\\ConsultationService.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAAwCEAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAEYAAAA3AAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-04-09T04:33:39.387Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-04-09T04:33:39.387Z"
             }
           ]
         }

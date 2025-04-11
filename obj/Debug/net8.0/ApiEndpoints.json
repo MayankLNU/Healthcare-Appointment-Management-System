@@ -146,30 +146,14 @@
   {
     "ContainingType": "AppointmentManagement.Controllers.User_Controllers.PatientController",
     "Method": "ReadPrescriptionsAndNotes",
-    "RelativePath": "api/Patient/Read-Prescriptions-And-Notes",
-    "HttpMethod": "POST",
+    "RelativePath": "api/Patient/Read-Prescriptions-And-Notes/{appointmentId}",
+    "HttpMethod": "GET",
     "IsController": true,
     "Order": 0,
     "Parameters": [
       {
-        "Name": "patientConsultationDTO",
-        "Type": "AppointmentManagement.Models.DTO.PatientConsultationDTO",
-        "IsRequired": true
-      }
-    ],
-    "ReturnTypes": []
-  },
-  {
-    "ContainingType": "AppointmentManagement.Controllers.User_Controllers.PatientController",
-    "Method": "UpdateAppointment",
-    "RelativePath": "api/Patient/update",
-    "HttpMethod": "POST",
-    "IsController": true,
-    "Order": 0,
-    "Parameters": [
-      {
-        "Name": "updateAppointmentDTO",
-        "Type": "AppointmentManagement.Models.DTO.UpdateAppointmentDTO",
+        "Name": "appointmentId",
+        "Type": "System.Int32",
         "IsRequired": true
       }
     ],
